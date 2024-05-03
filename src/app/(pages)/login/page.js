@@ -127,7 +127,7 @@ const LoginPage = () => {
       {user?.name && <button onClick={logoutUser}>Logout</button>}
       <br />
       <br />
-      {user?.name && <button onClick={privateRoute}>admin route</button>}
+      <button onClick={privateRoute}>admin route</button>
       <br />
       <br />
       <button onClick={refreshToAccess}>Generate new access token</button>
