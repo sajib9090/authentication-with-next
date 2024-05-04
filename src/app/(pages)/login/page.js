@@ -40,6 +40,12 @@ const LoginPage = () => {
         { withCredentials: true }
       )
       .then((res) => {
+        document.cookie =
+          "accessToken=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+
+        // Remove refresh token cookie
+        document.cookie =
+          "refreshToken=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
         console.log(res.data);
         setUser({});
       })
