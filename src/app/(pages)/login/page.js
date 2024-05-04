@@ -9,12 +9,14 @@ const LoginPage = () => {
   const [user, setUser] = useState({});
   const [shop, setShop] = useState({});
   const router = useRouter();
+  const [loading, setLoading] = useState(false);
 
   const loginUser = () => {
     const data = {
       usernameOrEmail: usernameOrEmail,
       password: password,
     };
+    setLoading(true);
 
     axios
       .post(
@@ -29,10 +31,14 @@ const LoginPage = () => {
       })
       .catch((error) => {
         alert(error.response.data.message);
+      })
+      .finally(() => {
+        setLoading(false);
       });
   };
 
   const logoutUser = () => {
+    setLoading(true);
     axios
       .post(
         "https://shop-management-backend-84x8.onrender.com/api/v1/users/auth-user-logout",
@@ -43,7 +49,6 @@ const LoginPage = () => {
         document.cookie =
           "accessToken=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
 
-        // Remove refresh token cookie
         document.cookie =
           "refreshToken=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
         console.log(res.data);
@@ -53,10 +58,14 @@ const LoginPage = () => {
         if (err) {
           setUser({});
         }
+      })
+      .finally(() => {
+        setLoading(false);
       });
   };
 
   const privateRoute = () => {
+    setLoading(true);
     axios
       .get(
         "https://shop-management-backend-84x8.onrender.com/api/v1/users/check",
@@ -73,10 +82,14 @@ const LoginPage = () => {
         if (err) {
           alert(err.response.data.message);
         }
+      })
+      .finally(() => {
+        setLoading(false);
       });
   };
 
   const refreshToAccess = () => {
+    setLoading(true);
     axios
       .get(
         "https://shop-management-backend-84x8.onrender.com/api/v1/users/auth-manage-token",
@@ -89,11 +102,15 @@ const LoginPage = () => {
       })
       .catch((err) => {
         alert(err.response.data.message);
+      })
+      .finally(() => {
+        setLoading(true);
       });
   };
 
   return (
     <div>
+      {loading && <h1>Loading...</h1>}
       {user?.name && (
         <>
           <p>user_id: {user?.user_id}</p>
