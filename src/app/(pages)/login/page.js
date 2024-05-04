@@ -20,7 +20,7 @@ const LoginPage = () => {
 
     axios
       .post(
-        "https://shop-management-backend-84x8.onrender.com/api/v1/users/auth-user-login",
+        "https://shop-management-backend.vercel.app/api/v1/users/auth-user-login",
         data,
         {
           withCredentials: true,
@@ -41,7 +41,7 @@ const LoginPage = () => {
     setLoading(true);
     axios
       .post(
-        "https://shop-management-backend-84x8.onrender.com/api/v1/users/auth-user-logout",
+        "https://shop-management-backend.vercel.app/api/v1/users/auth-user-logout",
         {},
         { withCredentials: true }
       )
@@ -68,7 +68,7 @@ const LoginPage = () => {
     setLoading(true);
     axios
       .get(
-        "https://shop-management-backend-84x8.onrender.com/api/v1/users/check",
+        "https://shop-management-backend.vercel.app/api/v1/users/check",
         {
           withCredentials: true,
         }
@@ -92,7 +92,7 @@ const LoginPage = () => {
     setLoading(true);
     axios
       .get(
-        "https://shop-management-backend-84x8.onrender.com/api/v1/users/auth-manage-token",
+        "https://shop-management-backend.vercel.app/api/v1/users/auth-manage-token",
         {
           withCredentials: true,
         }
