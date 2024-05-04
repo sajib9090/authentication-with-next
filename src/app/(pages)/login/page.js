@@ -122,6 +122,7 @@ const LoginPage = () => {
           <p>country: {user?.address?.country}</p>
         </>
       )}
+      {loading && <h1>Loading...</h1>}
       {!user?.name && (
         <>
           <h1>Login here</h1>
@@ -150,8 +151,12 @@ const LoginPage = () => {
       {user?.name && <button onClick={logoutUser}>Logout</button>}
       <br />
       <br />
+      {loading && <h1>Loading...</h1>}
+      <br />
+      <br />
       <button onClick={privateRoute}>admin route</button>
       <br />
+      {loading && <h1>Loading...</h1>}
       <br />
       <button onClick={refreshToAccess}>Generate new access token</button>
     </div>
