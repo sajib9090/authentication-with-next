@@ -2,14 +2,23 @@
 import axios from "axios";
 import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
+import { baseUrl } from "../baseUrl";
 
 const LoginPage = () => {
   const [usernameOrEmail, setUsernameOrEmail] = useState("");
   const [password, setPassword] = useState("");
   const [user, setUser] = useState({});
-  const [shop, setShop] = useState({});
   const router = useRouter();
   const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    const d = localStorage.getItem("user");
+    const userData = JSON.parse(d);
+    setUser(userData);
+    if (userData) {
+      router.push("/dashboard");
+    }
+  }, []);
 
   const loginUser = () => {
     const data = {
@@ -19,15 +28,13 @@ const LoginPage = () => {
     setLoading(true);
 
     axios
-      .post(
-        "https://shop-management-backend.vercel.app/api/v1/users/auth-user-login",
-        data,
-        {
-          withCredentials: true,
-        }
-      )
+      .post(`${baseUrl}/api/v1/users/auth-user-login`, data, {
+        withCredentials: true,
+      })
       .then((res) => {
         setUser(res.data.data);
+        localStorage.setItem("user", JSON.stringify(res.data.data));
+        router.push("/dashboard");
       })
       .catch((error) => {
         alert(error.response.data.message);
@@ -40,24 +47,19 @@ const LoginPage = () => {
   const logoutUser = () => {
     setLoading(true);
     axios
-      .post(
-        "https://shop-management-backend.vercel.app/api/v1/users/auth-user-logout",
-        {},
-        { withCredentials: true }
-      )
+      .post(`${baseUrl}/api/v1/users/auth-user-logout`, null, {
+        withCredentials: true,
+      })
       .then((res) => {
-        document.cookie =
-          "accessToken=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
-
-        document.cookie =
-          "refreshToken=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
-        console.log(res.data);
         setUser({});
+        localStorage.removeItem("user");
+        alert("logout");
       })
       .catch((err) => {
         if (err) {
           setUser({});
         }
+        console.log(err);
       })
       .finally(() => {
         setLoading(false);
@@ -67,12 +69,9 @@ const LoginPage = () => {
   const privateRoute = () => {
     setLoading(true);
     axios
-      .get(
-        "https://shop-management-backend.vercel.app/api/v1/users/check",
-        {
-          withCredentials: true,
-        }
-      )
+      .get(`${baseUrl}/api/v1/users/check`, {
+        withCredentials: true,
+      })
       .then((res) => {
         if (res.data.success) {
           router.push("/private");
@@ -91,12 +90,9 @@ const LoginPage = () => {
   const refreshToAccess = () => {
     setLoading(true);
     axios
-      .get(
-        "https://shop-management-backend.vercel.app/api/v1/users/auth-manage-token",
-        {
-          withCredentials: true,
-        }
-      )
+      .get(`${baseUrl}/api/v1/users/auth-manage-token`, {
+        withCredentials: true,
+      })
       .then((res) => {
         console.log(res.data);
       })
@@ -104,7 +100,7 @@ const LoginPage = () => {
         alert(err.response.data.message);
       })
       .finally(() => {
-        setLoading(true);
+        setLoading(false);
       });
   };
 
@@ -148,7 +144,7 @@ const LoginPage = () => {
 
       <br />
       <br />
-      {user?.name && <button onClick={logoutUser}>Logout</button>}
+      <button onClick={logoutUser}>Logout</button>
       <br />
       <br />
       {loading && <h1>Loading...</h1>}
