@@ -9,8 +9,7 @@ const DashboardPage = () => {
 
   const token = localStorage.getItem("accessToken");
   const parseToken = JSON.parse(token);
-  //token
- 
+
   const fetchProducts = () => {
     axios
       .get(`${baseUrl}/api/v1/products/find-products`, {
@@ -45,7 +44,7 @@ const DashboardPage = () => {
 
   useEffect(() => {
     console.log("rendering");
-    fetchProducts();
+    setTimeout(fetchProducts, 2000);
   }, []);
 
   const handleCheckboxChange = (id) => {
