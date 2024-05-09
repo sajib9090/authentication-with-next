@@ -3,14 +3,13 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { baseUrl } from "../baseUrl";
 import { useRouter } from "next/navigation";
+const token = localStorage.getItem("accessToken");
+const parseToken = JSON.parse(token);
 
 const DashboardPage = () => {
   const [data, setData] = useState([]);
   const [checkedIds, setCheckedIds] = useState([]);
   const router = useRouter();
-
-  const token = localStorage.getItem("accessToken");
-  const parseToken = JSON.parse(token);
 
   const fetchProducts = () => {
     axios
