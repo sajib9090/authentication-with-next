@@ -9,12 +9,12 @@ const DashboardPage = () => {
   const [checkedIds, setCheckedIds] = useState([]);
   const router = useRouter();
 
-  let parseToken;
+  const [parseToken, setParseToken] = useState(null);
 
   useEffect(() => {
     const token = localStorage.getItem("accessToken");
-    const parseToken1 = JSON.parse(token);
-    parseToken = parseToken1;
+    const parsedToken = JSON.parse(token);
+    setParseToken(parsedToken);
   }, []);
 
   const fetchProducts = () => {
@@ -55,6 +55,7 @@ const DashboardPage = () => {
   }, []);
 
   const logoutUser = () => {
+    console.log(parseToken);
     axios
       .post(`${baseUrl}/api/v1/users/auth-user-logout`, null, {
         withCredentials: true,
@@ -63,7 +64,7 @@ const DashboardPage = () => {
         },
       })
       .then((res) => {
-        setUser({});
+      
         localStorage.removeItem("user");
         localStorage.removeItem("accessToken");
         localStorage.removeItem("refreshToken");
