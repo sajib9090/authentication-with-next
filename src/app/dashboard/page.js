@@ -7,10 +7,16 @@ const DashboardPage = () => {
   const [data, setData] = useState([]);
   const [checkedIds, setCheckedIds] = useState([]);
 
+  const token = localStorage.getItem("accessToken");
+  const parseToken = JSON.parse(token);
+ 
   const fetchProducts = () => {
     axios
       .get(`${baseUrl}/api/v1/products/find-products`, {
         withCredentials: true,
+        headers: {
+          Authorization: `Bearer ${parseToken}`,
+        },
       })
       .then((res) => {
         setData(res.data.data);

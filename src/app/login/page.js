@@ -34,6 +34,14 @@ const LoginPage = () => {
       .then((res) => {
         setUser(res.data.data);
         localStorage.setItem("user", JSON.stringify(res.data.data));
+        localStorage.setItem(
+          "accessToken",
+          JSON.stringify(res.data.accessToken)
+        );
+        localStorage.setItem(
+          "refreshToken",
+          JSON.stringify(res.data.refreshToken)
+        );
         router.push("/dashboard");
       })
       .catch((error) => {
@@ -53,6 +61,8 @@ const LoginPage = () => {
       .then((res) => {
         setUser({});
         localStorage.removeItem("user");
+        localStorage.removeItem("accessToken");
+        localStorage.removeItem("refreshToken");
         alert("logout");
       })
       .catch((err) => {
