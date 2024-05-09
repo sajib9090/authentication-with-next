@@ -9,13 +9,8 @@ const DashboardPage = () => {
   const [checkedIds, setCheckedIds] = useState([]);
   const router = useRouter();
 
-  const [parseToken, setParseToken] = useState(null);
-
-  useEffect(() => {
-    const token = localStorage.getItem("accessToken");
-    const parsedToken = JSON.parse(token);
-    setParseToken(parsedToken);
-  }, []);
+  const token = localStorage.getItem("accessToken");
+  const parseToken = JSON.parse(token);
 
   const fetchProducts = () => {
     axios
@@ -51,7 +46,7 @@ const DashboardPage = () => {
 
   useEffect(() => {
     console.log("rendering");
-    setTimeout(fetchProducts, 2000);
+    fetchProducts();
   }, []);
 
   const logoutUser = () => {
@@ -64,7 +59,6 @@ const DashboardPage = () => {
         },
       })
       .then((res) => {
-      
         localStorage.removeItem("user");
         localStorage.removeItem("accessToken");
         localStorage.removeItem("refreshToken");
@@ -112,7 +106,6 @@ const DashboardPage = () => {
     setItemEdit(true);
     setItemEditData(item);
   };
-  console.log(editedData);
 
   const handleInputChange = (e, key) => {
     setEditedData({
