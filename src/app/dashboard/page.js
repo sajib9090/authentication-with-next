@@ -2,10 +2,12 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { baseUrl } from "../baseUrl";
+import { useRouter } from "next/navigation";
 
 const DashboardPage = () => {
   const [data, setData] = useState([]);
   const [checkedIds, setCheckedIds] = useState([]);
+  const router = useRouter();
 
   let parseToken;
 
@@ -51,6 +53,27 @@ const DashboardPage = () => {
     console.log("rendering");
     setTimeout(fetchProducts, 2000);
   }, []);
+
+  const logoutUser = () => {
+    axios
+      .post(`${baseUrl}/api/v1/users/auth-user-logout`, null, {
+        withCredentials: true,
+        headers: {
+          Authorization: `Bearer ${parseToken}`,
+        },
+      })
+      .then((res) => {
+        setUser({});
+        localStorage.removeItem("user");
+        localStorage.removeItem("accessToken");
+        localStorage.removeItem("refreshToken");
+        alert("logout");
+        router.push("/");
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
 
   const handleCheckboxChange = (id) => {
     if (checkedIds.includes(id)) {
@@ -99,6 +122,7 @@ const DashboardPage = () => {
   return (
     <div className="min-h-screen w-full">
       <h1>Dashboard page</h1>
+      <button onClick={logoutUser}>Logout</button>
       {checkedIds?.length > 0 && (
         <button onClick={handleDelete} className="bg-yellow-500">
           Delete selected: {checkedIds?.length}

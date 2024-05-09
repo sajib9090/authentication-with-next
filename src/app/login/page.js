@@ -81,9 +81,6 @@ const LoginPage = () => {
     axios
       .get(`${baseUrl}/api/v1/users/check`, {
         withCredentials: true,
-        headers:{
-          Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7Il9pZCI6IjY2MzRjMzRhN2MwZTI2NGI3MzI4YzIyMCIsInNob3BfaWQiOiIxLWM2ZDk4ODQ2MzYyZDg0MGM3N2RjODU4N2VhYzRmNzZjIiwidXNlcl9pZCI6IjEtNmYyNjg3ZTU2NTYzM2E3NGUxOWI1MmE2YmUxYjliMGYiLCJuYW1lIjoicmF5YW4gYWhtZWQiLCJ1c2VybmFtZSI6InVuc2VlbmJldXR5IiwiZW1haWwiOiJ1bnNlZW5iZXV0eUBnbWFpbC5jb20iLCJtb2JpbGUiOiIrODgwMTc5MTkxNTY0MyIsInBhc3N3b3JkIjoiJDJhJDEwJEdueTJWV29SRTI5NmtLdGliRGJxYS4uRXM3UjFsdWdTVWFNallaYTRiby8walBvM1pscFJtIiwiYWRtaW4iOnRydWUsInNob3Bfb3duZXIiOnRydWUsInNob3BfYWRtaW4iOmZhbHNlLCJiYW5uZWRfdXNlciI6ZmFsc2UsImRlbGV0ZWRfdXNlciI6ZmFsc2UsImFkZHJlc3MiOnsiZGV0YWlsZWRfc2hvcF9hZGRyZXNzIjoibmFyaWEgYmF6YXIgY2hha2RobyBiYWphciAsIHNoYXJpYXRwdXIgc2FraGlwb3VyIGFsdWJhamFyIiwiY291bnRyeSI6InVuaXRlZCBraW5nZG9tIn0sImNyZWF0ZWRBdCI6IjIwMjQtMDUtMDNUMTA6NTg6MTguNTk1WiJ9LCJpYXQiOjE3MTUyNjExODAsImV4cCI6MTcxNTM0NzU4MH0.9r_1xlnkGmauSWlTMM5bBLBDLIsLGeiClwxxgKWI1ew`
-        }
       })
       .then((res) => {
         if (res.data.success) {
