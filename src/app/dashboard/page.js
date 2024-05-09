@@ -9,6 +9,7 @@ const DashboardPage = () => {
 
   const token = localStorage.getItem("accessToken");
   const parseToken = JSON.parse(token);
+  //token
  
   const fetchProducts = () => {
     axios
