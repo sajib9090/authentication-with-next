@@ -7,8 +7,13 @@ const DashboardPage = () => {
   const [data, setData] = useState([]);
   const [checkedIds, setCheckedIds] = useState([]);
 
-  const token = localStorage.getItem("accessToken");
-  const parseToken = JSON.parse(token);
+  let parseToken;
+
+  useEffect(() => {
+    const token = localStorage.getItem("accessToken");
+    const parseToken1 = JSON.parse(token);
+    parseToken = parseToken1;
+  }, []);
 
   const fetchProducts = () => {
     axios
